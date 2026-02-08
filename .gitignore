@@ -1,0 +1,6 @@
+# Repository Planning Graph artifacts
+.rpg*/
+
+# Python cache artifacts
+scripts/rpg/__pycache__/
+*.pyc.*

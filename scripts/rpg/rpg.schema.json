@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repository Planning Graph",
+  "type": "object",
+  "required": [
+    "version",
+    "generated_at",
+    "repo_root",
+    "stats",
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "repo_root": {
+      "type": "string"
+    },
+    "stats": {
+      "type": "object",
+      "required": [
+        "node_count",
+        "edge_count",
+        "file_count"
+      ],
+      "properties": {
+        "node_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "edge_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "file_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "feature",
+        "meta"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "directory",
+            "file",
+            "function",
+            "class"
+          ]
+        },
+        "feature": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "meta": {
+          "type": "object",
+          "required": [
+            "path",
+            "symbol",
+            "language",
+            "start_line",
+            "end_line"
+          ],
+          "properties": {
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "symbol": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "language": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "start_line": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "end_line": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": [
+        "from",
+        "to",
+        "type"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "functional",
+            "dependency"
+          ]
+        },
+        "relation": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "RPG: Build Index",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/scripts/rpg/rpg_cli.py",
+        "build",
+        "--repo",
+        ".",
+        "--out",
+        ".rpg_data",
+        "--progress-interval",
+        "100"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "RPG: Search Intent",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/scripts/rpg/rpg_cli.py",
+        "search",
+        "${input:rpgIntent}",
+        "--db",
+        ".rpg_data/rpg.sqlite",
+        "--limit",
+        "10"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": [
+        "RPG: Build Index"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "RPG: Fetch Node",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/scripts/rpg/rpg_cli.py",
+        "fetch",
+        "${input:rpgNodeId}",
+        "--db",
+        ".rpg_data/rpg.sqlite"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": [
+        "RPG: Build Index"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "RPG: Explore Node",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/scripts/rpg/rpg_cli.py",
+        "explore",
+        "${input:rpgNodeId}",
+        "--db",
+        ".rpg_data/rpg.sqlite",
+        "--edge-type",
+        "${input:rpgEdgeType}",
+        "--depth",
+        "${input:rpgDepth}",
+        "--direction",
+        "${input:rpgDirection}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": [
+        "RPG: Build Index"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "RPG: Serve (127.0.0.1:7878)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/scripts/rpg/rpg_cli.py",
+        "serve",
+        "--db",
+        ".rpg_data/rpg.sqlite",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "7878"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "RPG: Build + Serve",
+      "dependsOn": [
+        "RPG: Build Index",
+        "RPG: Serve (127.0.0.1:7878)"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "rpgIntent",
+      "type": "promptString",
+      "description": "RPG search intent"
+    },
+    {
+      "id": "rpgNodeId",
+      "type": "promptString",
+      "description": "RPG node_id (for fetch/explore)"
+    },
+    {
+      "id": "rpgEdgeType",
+      "type": "pickString",
+      "description": "RPG edge type",
+      "default": "dependency",
+      "options": [
+        "dependency",
+        "functional",
+        "any"
+      ]
+    },
+    {
+      "id": "rpgDepth",
+      "type": "pickString",
+      "description": "RPG explore depth",
+      "default": "2",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "id": "rpgDirection",
+      "type": "pickString",
+      "description": "RPG explore direction",
+      "default": "both",
+      "options": [
+        "both",
+        "out",
+        "in"
+      ]
+    }
+  ]
+}

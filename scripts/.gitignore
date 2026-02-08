@@ -1,0 +1,51 @@
+# Build outputs
+/build/
+/out/
+**/cmake-build-*/
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/install_manifest.txt
+**/compile_commands.json
+**/CTestTestfile.cmake
+**/Testing/
+
+# CMake presets (user-specific)
+/CMakeUserPresets.json
+
+# Visual Studio / MSVC / Windows build artifacts
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.dll
+*.lib
+*.exp
+*.iobj
+*.ipdb
+*.tlog
+*.idb
+*.pch
+
+# IDE state
+/.vs/
+/.vscode/.cache/
+/.vscode/ipch/
+*.code-workspace
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Local dev scratch (Codex tool deletion is restricted in this workspace)
+rxmesh/apps/rxmesh_viewer/web/tmp_delete_test.txt
+
+# FlatBuffers codegen output (optional; generated via VS Code task)
+rxmesh/libs/serialization/generated/
+
+# Repository Planning Graph artifacts
+.rpg*/
+
+# Python cache artifacts
+scripts/rpg/__pycache__/
+*.pyc.*
